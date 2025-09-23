@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Brillante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, rgba(255, 255, 0, 0.4) 0%, transparent 70%), #0d0d0d;
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 6em;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estilos para las estrellas */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Contenedor principal de los mensajes que se moverá */
+        .message-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50vh);
+            animation: groupAscend 6s ease-out forwards; /* La animación del texto ya no tiene retraso inicial */
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Animación para el grupo de mensajes */
+        @keyframes groupAscend {
+            0% {
+                opacity: 0;
+                transform: translateY(50vh);
+            }
+            15% {
+                opacity: 1;
+                transform: translateY(50vh);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(50vh);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-40vh);
+            }
+        }
+
+        /* Estilos para el texto principal (Para ti) */
+        .message {
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para el texto secundario (te amo muuuucho) */
+        .subtitle {
+            font-size: 0.5em;
+        }
+
+        /* Estilos para la imagen final del Flork */
+        .flork-outro-container {
+            position: absolute;
+            top: 50%; /* Centra verticalmente */
+            left: 50%; /* Centra horizontalmente */
+            transform: translate(-50%, -50%) scale(0.5); /* Centra y escala inicial más pequeña */
+            opacity: 0;
+            z-index: 15; /* Asegura que esté por encima de las estrellas pero debajo del texto */
+            animation: fadeInAndScaleUp 2s ease-out 5.5s forwards; /* Retraso para que aparezca al final */
+        }
+
+        .flork-outro {
+            max-width: 60vh; /* Ajusta el tamaño de la imagen */
+            max-height: 60vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        @keyframes fadeInAndScaleUp {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } /* Aparece y se agranda */
+        }
+
+        /* Media queries para ajustar el tamaño de fuente en pantallas más pequeñas */
+        @media (max-width: 768px) {
+            body {
+                font-size: 4.5em;
+            }
+            .subtitle {
+                font-size: 0.6em;
+            }
+            .flork-outro {
+                 max-width: 50vh;
+                 max-height: 50vh;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                font-size: 3em;
+            }
+            .subtitle {
+                font-size: 0.7em;
+            }
+            .flork-outro {
+                 max-width: 40vh;
+                 max-height: 40vh;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body {
+                font-size: 2.5em;
+            }
+            .subtitle {
+                font-size: 0.7em;
+            }
+            .flork-outro {
+                 max-width: 35vh;
+                 max-height: 35vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <div class="message-group">
+            <div class="message">
+                Para ti
+            </div>
+            <div class="subtitle">
+                te amo muuuucho
+            </div>
+        </div>
+    </div>
+
+    <div class="flork-outro-container">
+        <img src="https://raw.githubusercontent.com/marioquenguan77-gif/Para-mi-novia/e6330f9299065c070fc64a546efbacf35e9700ba/1000063228.png" alt="Flork con flores" class="flork-outro">
+    </div>
+
+    <script>
+        const numStars = 100;
+        for (let i = 0; i < numStars; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.height = star.style.width;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(star);
+        }
+    </script>
+</body>
+</html>
