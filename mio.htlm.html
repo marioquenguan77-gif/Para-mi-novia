@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Sarita 🩷</title>
+    
+    <script>
+        /**************************************************************
+         * CONFIGURACIÓN DE TUS IMÁGENES:
+         **************************************************************/
+        
+        // 1. Pega aquí el link de la imagen de la PREGUNTA (Página 1):
+        const IMAGEN_PAGINA_1 = "https://raw.githubusercontent.com/marioquenguan77-gif/Para-mi-novia/refs/heads/main/24ddc140-6177-44ef-9455-30aed492a12e-removebg-preview.png";
+
+        // 2. Pega aquí el link de la imagen de la ACEPTACIÓN (Página 2):
+        const IMAGEN_PAGINA_2 = "https://raw.githubusercontent.com/marioquenguan77-gif/Para-mi-novia/refs/heads/main/9985d388-702c-4b95-9e3e-ea93d587c131-removebg-preview.png";
+
+        /**************************************************************/
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #1a0210;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; text-align: center;
+        }
+        .stars-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.3; animation: twinkle var(--duration) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.5; } }
+        
+        .content { position: relative; z-index: 2; width: 90%; }
+        h1 { font-size: 4.5rem; margin: 0; text-shadow: 0 0 15px rgba(255, 183, 197, 0.8); }
+        
+        .img-container { position: relative; width: 250px; height: 250px; margin: 20px auto; animation: bounce 2.5s infinite ease-in-out; }
+        .img-container img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6)); }
+        
+        .btn-secreto { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: transparent; border: none; cursor: pointer; z-index: 10; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        
+        .buttons { margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; position: relative; }
+        .btn { font-family: 'Dancing Script', cursive; padding: 12px 30px; border-radius: 50px; border: none; font-size: 1.6rem; cursor: pointer; width: 240px; transition: transform 0.2s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .btn-si { background: #ff4d6d; color: white; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); order: 1; }
+        .btn-no { background: rgba(255, 255, 255, 0.15); color: white; font-size: 1.4rem; order: 2; }
+        
+        #pagina-final { display: none; opacity: 0; transition: opacity 1s ease; }
+        .texto-final { font-size: 3.2rem; color: #ffb7c5; text-transform: uppercase; text-shadow: 0 0 20px rgba(255, 183, 197, 1); line-height: 1.1; }
+        .mensaje-amor { font-size: 1.8rem; margin-top: 20px; color: #ffffff; text-transform: uppercase; padding: 0 10px; line-height: 1.3; }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="stars"></div>
+
+    <div id="pagina-pregunta" class="content">
+        <h1>Sarita</h1>
+        <p style="font-size: 1.8rem;">¿Quieres ser mi San Valentín <br> este 14 de febrero?</p>
+        <div class="img-container">
+            <img id="imgP1" src="" alt="Imagen Inicial">
+        </div>
+        <div class="buttons" id="contenedorBotones">
+            <button id="btnSi" class="btn btn-si" onclick="aceptar()">¡CLARO QUE SÍ! 🩷</button>
+            <button id="btnNo" class="btn btn-no" onclick="soloIntercambiar()">¡No, ni loca!😂</button>
+        </div>
+    </div>
+
+    <div id="pagina-final" class="content">
+        <h1 class="texto-final">¡SABÍA QUE ACEPTARÍAS, SARITA! 🩷</h1>
+        <div class="img-container">
+            <button class="btn-secreto" onclick="volver()"></button>
+            <img id="imgP2" src="" alt="Imagen Final">
+        </div>
+        <p style="font-size: 2rem; margin-bottom: 5px;">Nos vemos el 14... 😍</p>
+        <p class="mensaje-amor">TE AMOOOOOOO MUUUUUUUCHO... MI NIÑA HERMOSA GUAPA... 😘🩷🩷</p>
+    </div>
+  
+    <script>
+        // Cargar las imágenes desde la configuración
+        document.getElementById('imgP1').src = IMAGEN_PAGINA_1;
+        document.getElementById('imgP2').src = IMAGEN_PAGINA_2;
+
+        // Estrellas
+        const container = document.getElementById('stars');
+        for (let i = 0; i < 70; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.top = Math.random() * 100 + '%'; star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            container.appendChild(star);
+        }
+
+        let posicionCambiada = false;
+        function soloIntercambiar() {
+            const btnSi = document.getElementById('btnSi');
+            const btnNo = document.getElementById('btnNo');
+            if (!posicionCambiada) {
+                btnSi.style.order = "2"; btnNo.style.order = "1";
+                posicionCambiada = true;
+            } else {
+                btnSi.style.order = "1"; btnNo.style.order = "2";
+                posicionCambiada = false;
+            }
+        }
+
+        function aceptar() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ffb7c5', '#ffffff'] });
+            document.getElementById('pagina-pregunta').style.display = 'none';
+            const final = document.getElementById('pagina-final');
+            final.style.display = 'block';
+            setTimeout(() => { final.style.opacity = '1'; }, 50);
+        }
+
+        function volver() {
+            const final = document.getElementById('pagina-final');
+            final.style.opacity = '0';
+            setTimeout(() => {
+                final.style.display = 'none';
+                document.getElementById('pagina-pregunta').style.display = 'block';
+                document.getElementById('btnSi').style.order = "1";
+                document.getElementById('btnNo').style.order = "2";
+                posicionCambiada = false;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
